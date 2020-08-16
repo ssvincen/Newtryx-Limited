@@ -18,13 +18,9 @@ namespace Newtryx_Limited
         {
             var container = new UnityContainer();
             container.RegisterType<IConnectionManager, ConnectionManager>();
+            container.RegisterType<IRestaurant, Restaurant>();
+            container.RegisterType<IReservation, Reservation>();
             container.RegisterType<IOrder, Order>();
-            container.RegisterType<IConnectionManager, ConnectionManager>();
-            container.RegisterType<IConnectionManager, ConnectionManager>();
-            // register all your components with the container here
-            // it is NOT necessary to register your controllers
-
-            // e.g. container.RegisterType<ITestService, TestService>();            
 
             return container;
         }

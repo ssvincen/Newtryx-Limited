@@ -56,8 +56,16 @@ namespace Newtryx_Limited.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    await restaurant.AddRestaurant(model);
-                    return RedirectToAction("Index");
+                    var data = await restaurant.GetRestaurantByName(model.Name);
+                    if (data == null)
+                    {
+                        await restaurant.AddRestaurant(model);
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("Name", "The restaurant already exist");
+                    }
                 }
             }
             catch (Exception exception)
@@ -117,7 +125,8 @@ namespace Newtryx_Limited.Controllers
         }
 
         // POST: Restaurant/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(long? id)
         {
             try

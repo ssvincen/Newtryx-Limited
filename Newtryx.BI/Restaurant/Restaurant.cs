@@ -21,10 +21,11 @@ namespace Newtryx.BI
         public async Task<long> AddRestaurant(RestaurantViewModel restaurant)
         {
             var param = new DynamicParameters();
-            param.Add("@name", dbType: DbType.Int64, value: restaurant.Name, direction: ParameterDirection.Input);
+            param.Add("@id", dbType: DbType.Int64, value: restaurant.Id, direction: ParameterDirection.Input);
+            param.Add("@name", dbType: DbType.String, value: restaurant.Name, direction: ParameterDirection.Input);
             using (var db = connectionManager.NewtryxConnection())
             {
-                return await db.QueryFirstOrDefaultAsync<long>("device.pr_DeviceSearch", commandType: CommandType.StoredProcedure,
+                return await db.QueryFirstOrDefaultAsync<long>("dbo.spr_UpsertRestaurant", commandType: CommandType.StoredProcedure,
                     param: param);
             }
         }
@@ -35,7 +36,7 @@ namespace Newtryx.BI
             param.Add("@restaurantId", dbType: DbType.Int64, value: restaurantId, direction: ParameterDirection.Input);
             using (var db = connectionManager.NewtryxConnection())
             {
-                return await db.QueryFirstOrDefaultAsync<bool>("device.pr_DeviceSearch", commandType: CommandType.StoredProcedure,
+                return await db.QueryFirstOrDefaultAsync<bool>("dbo.spr_DeleteRestaurant", commandType: CommandType.StoredProcedure,
                     param: param);
             }
         }
@@ -46,30 +47,38 @@ namespace Newtryx.BI
             param.Add("@restaurantId", dbType: DbType.Int64, value: restaurantId, direction: ParameterDirection.Input);
             using (var db = connectionManager.NewtryxConnection())
             {
-                return await db.QueryFirstOrDefaultAsync<RestaurantModel>("device.pr_DeviceSearch", commandType: CommandType.StoredProcedure,
+                return await db.QueryFirstOrDefaultAsync<RestaurantModel>("dbo.spr_GetRestaurantById", commandType: CommandType.StoredProcedure,
+                    param: param);
+            }
+        }
+
+        public async Task<RestaurantModel> GetRestaurantByName(string name)
+        {
+            var param = new DynamicParameters();
+            param.Add("@name", dbType: DbType.String, value: name, direction: ParameterDirection.Input);
+            using (var db = connectionManager.NewtryxConnection())
+            {
+                return await db.QueryFirstOrDefaultAsync<RestaurantModel>("dbo.spr_GetRestaurantByName", commandType: CommandType.StoredProcedure,
                     param: param);
             }
         }
 
         public async Task<IEnumerable<RestaurantModel>> GetRestaurants()
         {
-            var param = new DynamicParameters();
-            param.Add("@restaurantId", dbType: DbType.Int64, value: "", direction: ParameterDirection.Input);
             using (var db = connectionManager.NewtryxConnection())
             {
-                return await db.QueryAsync<RestaurantModel>("device.pr_DeviceSearch", commandType: CommandType.StoredProcedure,
-                    param: param);
+                return await db.QueryAsync<RestaurantModel>("dbo.spr_GetAllRestaurants", commandType: CommandType.StoredProcedure);
             }
         }
 
         public async Task<bool> UpdateRestaurant(RestaurantViewModel restaurant)
         {
             var param = new DynamicParameters();
-            param.Add("@restaurantId", dbType: DbType.Int64, value: restaurant.Id, direction: ParameterDirection.Input);
-            param.Add("@name", dbType: DbType.Int64, value: restaurant.Name, direction: ParameterDirection.Input);
+            param.Add("@id", dbType: DbType.Int64, value: restaurant.Id, direction: ParameterDirection.Input);
+            param.Add("@name", dbType: DbType.String, value: restaurant.Name, direction: ParameterDirection.Input);
             using (var db = connectionManager.NewtryxConnection())
             {
-                return await db.QueryFirstOrDefaultAsync<bool>("device.pr_DeviceSearch", commandType: CommandType.StoredProcedure,
+                return await db.QueryFirstOrDefaultAsync<bool>("dbo.spr_UpsertRestaurant", commandType: CommandType.StoredProcedure,
                     param: param);
             }
         }

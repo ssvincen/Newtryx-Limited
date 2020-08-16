@@ -6,7 +6,6 @@ namespace Newtryx.BO
     {
         public long? Id { get; set; }
 
-
         [Required(ErrorMessage = "Name of Restaurant is required")]
         [Display(Name = "Restaurant Name")]
         public string Name { get; set; }
