@@ -1,0 +1,11 @@
+C:\Users\sifiso\source\repos\Newtryx Limited\Newtryx.BI\bin\Debug\Newtryx.BI.dll
+C:\Users\sifiso\source\repos\Newtryx Limited\Newtryx.BI\bin\Debug\Newtryx.BI.pdb
+C:\Users\sifiso\source\repos\Newtryx Limited\Newtryx.BI\bin\Debug\Dapper.dll
+C:\Users\sifiso\source\repos\Newtryx Limited\Newtryx.BI\bin\Debug\Newtryx.BO.dll
+C:\Users\sifiso\source\repos\Newtryx Limited\Newtryx.BI\bin\Debug\Newtryx.BO.pdb
+C:\Users\sifiso\source\repos\Newtryx Limited\Newtryx.BI\bin\Debug\Dapper.xml
+C:\Users\sifiso\source\repos\Newtryx Limited\Newtryx.BI\obj\Debug\Newtryx.BI.csprojAssemblyReference.cache
+C:\Users\sifiso\source\repos\Newtryx Limited\Newtryx.BI\obj\Debug\Newtryx.BI.csproj.CoreCompileInputs.cache
+C:\Users\sifiso\source\repos\Newtryx Limited\Newtryx.BI\obj\Debug\Newtryx.BI.csproj.CopyComplete
+C:\Users\sifiso\source\repos\Newtryx Limited\Newtryx.BI\obj\Debug\Newtryx.BI.dll
+C:\Users\sifiso\source\repos\Newtryx Limited\Newtryx.BI\obj\Debug\Newtryx.BI.pdb

@@ -1,0 +1,6 @@
+C:\Users\sifiso\source\repos\Newtryx Limited\Newtryx.BO\bin\Debug\Newtryx.BO.dll
+C:\Users\sifiso\source\repos\Newtryx Limited\Newtryx.BO\bin\Debug\Newtryx.BO.pdb
+C:\Users\sifiso\source\repos\Newtryx Limited\Newtryx.BO\obj\Debug\Newtryx.BO.csprojAssemblyReference.cache
+C:\Users\sifiso\source\repos\Newtryx Limited\Newtryx.BO\obj\Debug\Newtryx.BO.csproj.CoreCompileInputs.cache
+C:\Users\sifiso\source\repos\Newtryx Limited\Newtryx.BO\obj\Debug\Newtryx.BO.dll
+C:\Users\sifiso\source\repos\Newtryx Limited\Newtryx.BO\obj\Debug\Newtryx.BO.pdb
