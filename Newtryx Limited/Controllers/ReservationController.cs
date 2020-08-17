@@ -14,9 +14,11 @@ namespace Newtryx_Limited.Controllers
     public class ReservationController : Controller
     {
         private readonly IReservation reservation;
-        public ReservationController(IReservation _reservation)
+        private readonly IRestaurant restaurant;
+        public ReservationController(IReservation _reservation, IRestaurant _restaurant)
         {
             reservation = _reservation;
+            restaurant = _restaurant;
         }
         // GET: Reservation
         public async Task<ActionResult> Index(int page = 1, int pageSize = 10)
@@ -48,6 +50,8 @@ namespace Newtryx_Limited.Controllers
                 return RedirectToAction("Index", "Restaurant");
             }
             var reservationStatus = await reservation.GetReservationStatus();
+            var getRestaurant = await restaurant.GetRestaurantById(RestaurantId);
+            ViewBag.RestaurantName = getRestaurant.Name;
             ViewBag.ReservationStatusId = new SelectList(reservationStatus, "Id", "Name");
             return View();
         }
@@ -69,7 +73,9 @@ namespace Newtryx_Limited.Controllers
             {
                 ModelState.AddModelError("", exception.Message);
             }
+            var getRestaurant = await restaurant.GetRestaurantById(model.RestaurantId);
             var reservationStatus = await reservation.GetReservationStatus();
+            ViewBag.RestaurantName = getRestaurant.Name;
             ViewBag.ReservationStatusId = new SelectList(reservationStatus, "Id", "Name", model.ReservationStatusId);
             return View(model);
         }

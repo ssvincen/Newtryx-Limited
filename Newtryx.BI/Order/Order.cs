@@ -17,15 +17,13 @@ namespace Newtryx.BI
             connectionManager = _connectionManager;
         }
 
-        
-
         public async Task<OrderModel> GetOrderById(long? orderId)
         {
             var param = new DynamicParameters();
             param.Add("@orderId", dbType: DbType.Int64, value: orderId, direction: ParameterDirection.Input);
             using (var db = connectionManager.NewtryxConnection())
             {
-                return await db.QueryFirstOrDefaultAsync<OrderModel>("device.pr_DeviceSearch", commandType: CommandType.StoredProcedure,
+                return await db.QueryFirstOrDefaultAsync<OrderModel>("dbo.spr_GetOrderById", commandType: CommandType.StoredProcedure,
                     param: param);
             }
         }
@@ -36,7 +34,7 @@ namespace Newtryx.BI
             param.Add("@SearchString", dbType: DbType.String, value: "", direction: ParameterDirection.Input);
             using (var db = connectionManager.NewtryxConnection())
             {
-                return await db.QueryAsync<OrderModel>("device.pr_DeviceSearch", commandType: CommandType.StoredProcedure,
+                return await db.QueryAsync<OrderModel>("dbo.spr_GetAllOrders", commandType: CommandType.StoredProcedure,
                     param: param);
             }
         }
@@ -59,7 +57,7 @@ namespace Newtryx.BI
             param.Add("@orderId", dbType: DbType.Int64, value: orderId, direction: ParameterDirection.Input);
             using (var db = connectionManager.NewtryxConnection())
             {
-                return await db.QueryFirstOrDefaultAsync("device.pr_DeviceSearch", commandType: CommandType.StoredProcedure,
+                return await db.QueryFirstOrDefaultAsync<bool>("dbo.spr_DeleteOrder", commandType: CommandType.StoredProcedure,
                     param: param);
             }
         }
@@ -71,7 +69,7 @@ namespace Newtryx.BI
             param.Add("@description", dbType: DbType.String, value: order.Description, direction: ParameterDirection.Input);
             using (var db = connectionManager.NewtryxConnection())
             {
-                return await db.QueryFirstOrDefaultAsync("device.pr_DeviceSearch", commandType: CommandType.StoredProcedure,
+                return await db.QueryFirstOrDefaultAsync<bool>("", commandType: CommandType.StoredProcedure,
                     param: param);
             }
         }

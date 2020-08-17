@@ -20,11 +20,28 @@ namespace Newtryx_Limited.Controllers
             restaurant = _restaurant;
         }
         // GET: Restaurant
-        public async Task<ActionResult> Index(int page = 1, int pageSize = 10)
+        public async Task<ActionResult> Index(string name, int page = 1, int pageSize = 10)
         {
             var data = await restaurant.GetRestaurants();
-            return View(data.ToPagedList(page, pageSize));
+            if (string.IsNullOrEmpty(name))
+            {               
+                return View(data.ToPagedList(page, pageSize));
+            }
+            else
+            {
+                var search = data.Where(x => x.Name.ToLower().StartsWith(name.ToLower()));
+                return View(search.ToPagedList(page, pageSize));
+            }
+            
         }
+
+        [HttpPost]
+        public async Task<JsonResult> GetRestaurntByName(string name)
+        {
+            var restaurants = (from x in await restaurant.GetRestaurants() where x.Name.StartsWith(name) select new { label = x.Name }).ToList();
+            return Json(restaurants);
+        }
+
 
         // GET: Restaurant/Details/5
         public async Task<ActionResult> Details(long? id)

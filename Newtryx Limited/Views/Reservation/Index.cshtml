@@ -10,6 +10,10 @@
 <p>
     @Html.ActionLink("Create New", "Index", "Restaurant")
 </p>
+<br />
+<p>
+    @Html.TextBox("name", null, new { @placeholder = "Search Restaurant", @class = "form-control" })
+</p>
 <table class="table">
     <tr>
         <th>Restaurant Name</th>
@@ -48,9 +52,9 @@
 
                 }
                 | @Html.ActionLink("View Order", "Orders", "Order", new { ReservationId = item.Id }, null) |
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                @Html.ActionLink("Update", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) 
+                @*@Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
             </td>
         </tr>
     }

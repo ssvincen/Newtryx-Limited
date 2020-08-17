@@ -70,7 +70,7 @@ namespace Newtryx_Limited.Controllers
                     {
                         await order.AddOrder(item);
                     }
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", "Reservation");
                 }
             }
             catch(Exception exception)
@@ -130,7 +130,8 @@ namespace Newtryx_Limited.Controllers
         }
 
         // POST: Order/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(long id)
         {
             try
@@ -138,7 +139,7 @@ namespace Newtryx_Limited.Controllers
                 if (ModelState.IsValid)
                 {
                     await order.DeleteOrder(id);
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", "Reservation");
                 }
             }
             catch (Exception exception)
