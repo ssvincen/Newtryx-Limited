@@ -9,8 +9,11 @@ namespace Newtryx.BI
     {
         Task<ReservationModel> GetReservationById(long? reservationId);
         Task<IEnumerable<ReservationModel>> GetReservations();
-        Task<long> AddReservation(ReservationViewModel reservation);
+        Task<long> UpsertReservation(ReservationViewModel reservation);
         Task<bool> DeleteReservation(long? reservationId);
-        Task<bool> UpdateReservation(ReservationViewModel reservation);
+        Task<ReservationViewModel> UpdateReservation(long? reservationId);
+        Task<IEnumerable<ReservationStatus>> GetReservationStatus();
+
+
     }
 }

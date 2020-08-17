@@ -19,6 +19,12 @@ namespace Newtryx_Limited.Controllers
             order = _order;
         }
         // GET: Order
+
+        public async Task<ActionResult> Orders(long? ReservationId)
+        {
+            var data = await order.GetOrderByReservationId(ReservationId);
+            return View(data);
+        }
         public async Task<ActionResult> Index(int page = 1, int pageSize = 10)
         {
             var data = await order.GetOrders();
@@ -41,21 +47,29 @@ namespace Newtryx_Limited.Controllers
         }
 
         // GET: Order/Create
-        public ActionResult Create()
+        public ActionResult Create(long? ReservationId)
         {
-            return View();
+            if(ReservationId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            List<OrderViewModel> orderViewModels = new List<OrderViewModel> { new OrderViewModel { Id = 0, ReservationId = ReservationId, Description = "" } };
+            return View(orderViewModels);
         }
 
         // POST: Order/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(OrderViewModel model)
+        public async Task<ActionResult> Create(List<OrderViewModel> model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    await order.AddOrder(model);
+                    foreach (var item in model)
+                    {
+                        await order.AddOrder(item);
+                    }
                     return RedirectToAction("Index");
                 }
             }

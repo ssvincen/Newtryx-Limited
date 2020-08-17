@@ -41,8 +41,14 @@ namespace Newtryx_Limited.Controllers
         }
 
         // GET: Reservation/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create(long? RestaurantId)
         {
+            if(RestaurantId == null)
+            {
+                return RedirectToAction("Index", "Restaurant");
+            }
+            var reservationStatus = await reservation.GetReservationStatus();
+            ViewBag.ReservationStatusId = new SelectList(reservationStatus, "Id", "Name");
             return View();
         }
 
@@ -55,7 +61,7 @@ namespace Newtryx_Limited.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    await reservation.AddReservation(model);
+                    await reservation.UpsertReservation(model);
                     return RedirectToAction("Index");
                 }
             }
@@ -63,6 +69,8 @@ namespace Newtryx_Limited.Controllers
             {
                 ModelState.AddModelError("", exception.Message);
             }
+            var reservationStatus = await reservation.GetReservationStatus();
+            ViewBag.ReservationStatusId = new SelectList(reservationStatus, "Id", "Name", model.ReservationStatusId);
             return View(model);
         }
 
@@ -72,12 +80,14 @@ namespace Newtryx_Limited.Controllers
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var data = await reservation.GetReservationById(id);
+            }            
+            var reservationStatus = await reservation.GetReservationStatus();
+            var data = await reservation.UpdateReservation(id);
             if (data == null)
             {
                 return HttpNotFound();
             }
+            ViewBag.ReservationStatusId = new SelectList(reservationStatus, "Id", "Name", data.ReservationStatusId);
             return View(data);
         }
 
@@ -89,7 +99,7 @@ namespace Newtryx_Limited.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    await reservation.UpdateReservation(model);
+                    await reservation.UpsertReservation(model);
                     return RedirectToAction("Index");
                 }
             }
@@ -97,6 +107,8 @@ namespace Newtryx_Limited.Controllers
             {
                 ModelState.AddModelError("", exception.Message);
             }
+            var reservationStatus = await reservation.GetReservationStatus();
+            ViewBag.ReservationStatusId = new SelectList(reservationStatus, "Id", "Name", model.ReservationStatusId);
             return View(model);
         }
 
@@ -116,7 +128,8 @@ namespace Newtryx_Limited.Controllers
         }
 
         // POST: Reservation/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(long? id)
         {
             try

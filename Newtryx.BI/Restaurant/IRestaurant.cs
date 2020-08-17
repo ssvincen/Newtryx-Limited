@@ -14,8 +14,8 @@ namespace Newtryx.BI
         Task<RestaurantModel> GetRestaurantByName(string name);
         Task<RestaurantModel> GetRestaurantById(long? restaurantId);
         Task<IEnumerable<RestaurantModel>> GetRestaurants();
-        Task<long> AddRestaurant(RestaurantViewModel restaurant);
+        Task<long> UpsertRestaurant(RestaurantViewModel restaurant);
         Task<bool> DeleteRestaurant(long? restaurantId);
-        Task<bool> UpdateRestaurant(RestaurantViewModel restaurant);
+        
     }
 }

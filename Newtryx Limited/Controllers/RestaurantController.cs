@@ -59,7 +59,7 @@ namespace Newtryx_Limited.Controllers
                     var data = await restaurant.GetRestaurantByName(model.Name);
                     if (data == null)
                     {
-                        await restaurant.AddRestaurant(model);
+                        await restaurant.UpsertRestaurant(model);
                         return RedirectToAction("Index");
                     }
                     else
@@ -98,7 +98,7 @@ namespace Newtryx_Limited.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    await restaurant.UpdateRestaurant(model);
+                    await restaurant.UpsertRestaurant(model);
                     return RedirectToAction("Index");
                 }
             }

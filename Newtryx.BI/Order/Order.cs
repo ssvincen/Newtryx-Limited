@@ -17,6 +17,8 @@ namespace Newtryx.BI
             connectionManager = _connectionManager;
         }
 
+        
+
         public async Task<OrderModel> GetOrderById(long? orderId)
         {
             var param = new DynamicParameters();
@@ -43,10 +45,10 @@ namespace Newtryx.BI
         {
             var param = new DynamicParameters();
             param.Add("@reservationId", dbType: DbType.Int64, value: order.ReservationId, direction: ParameterDirection.Input);
-            param.Add("@description", dbType: DbType.Int64, value: order.Description, direction: ParameterDirection.Input);
+            param.Add("@description", dbType: DbType.String, value: order.Description, direction: ParameterDirection.Input);
             using (var db = connectionManager.NewtryxConnection())
             {
-                return await db.QueryFirstOrDefaultAsync("device.pr_DeviceSearch", commandType: CommandType.StoredProcedure,
+                return await db.QueryFirstOrDefaultAsync<long>("dbo.spr_AddOrder", commandType: CommandType.StoredProcedure,
                     param: param);
             }
         }
@@ -74,6 +76,16 @@ namespace Newtryx.BI
             }
         }
 
-      
+        public async Task<IEnumerable<OrderModel>> GetOrderByReservationId(long? reservationId)
+        {
+            var param = new DynamicParameters();
+            param.Add("@reservationId", dbType: DbType.Int64, value: reservationId, direction: ParameterDirection.Input);
+            using (var db = connectionManager.NewtryxConnection())
+            {
+                return await db.QueryAsync<OrderModel>("dbo.spr_GetOrderByReservationId", 
+                    commandType: CommandType.StoredProcedure, param: param);
+            }
+            
+        }
     }
 }

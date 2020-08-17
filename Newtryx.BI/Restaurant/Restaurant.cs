@@ -18,7 +18,7 @@ namespace Newtryx.BI
             connectionManager = _connectionManager;
         }
 
-        public async Task<long> AddRestaurant(RestaurantViewModel restaurant)
+        public async Task<long> UpsertRestaurant(RestaurantViewModel restaurant)
         {
             var param = new DynamicParameters();
             param.Add("@id", dbType: DbType.Int64, value: restaurant.Id, direction: ParameterDirection.Input);
@@ -71,16 +71,5 @@ namespace Newtryx.BI
             }
         }
 
-        public async Task<bool> UpdateRestaurant(RestaurantViewModel restaurant)
-        {
-            var param = new DynamicParameters();
-            param.Add("@id", dbType: DbType.Int64, value: restaurant.Id, direction: ParameterDirection.Input);
-            param.Add("@name", dbType: DbType.String, value: restaurant.Name, direction: ParameterDirection.Input);
-            using (var db = connectionManager.NewtryxConnection())
-            {
-                return await db.QueryFirstOrDefaultAsync<bool>("dbo.spr_UpsertRestaurant", commandType: CommandType.StoredProcedure,
-                    param: param);
-            }
-        }
     }
 }
