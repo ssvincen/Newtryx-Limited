@@ -24,12 +24,13 @@ namespace Newtryx_Limited.Controllers
         {
             var data = await restaurant.GetRestaurants();
             if (string.IsNullOrEmpty(name))
-            {               
+            {
                 return View(data.ToPagedList(page, pageSize));
             }
             else
             {
-                var search = data.Where(x => x.Name.ToLower().StartsWith(name.ToLower()));
+                string trimName = name.Trim();
+                var search = data.Where(x => x.Name.ToLower().StartsWith(trimName.ToLower()));
                 return View(search.ToPagedList(page, pageSize));
             }
             

@@ -30,7 +30,8 @@ namespace Newtryx_Limited.Controllers
             }
             else
             {
-                var search = data.Where(x => x.Description.ToLower().StartsWith(name.ToLower()));
+                string trimName = name.Trim();
+                var search = data.Where(x => x.Description.ToLower().StartsWith(trimName.ToLower()));
                 return View(search.ToPagedList(page, pageSize));
             }
         }
