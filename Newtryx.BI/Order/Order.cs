@@ -17,13 +17,13 @@ namespace Newtryx.BI
             connectionManager = _connectionManager;
         }
 
-        public async Task<OrderModel> GetOrderById(long? orderId)
+        public async Task<OrderViewModel> GetOrderById(long? orderId)
         {
             var param = new DynamicParameters();
             param.Add("@orderId", dbType: DbType.Int64, value: orderId, direction: ParameterDirection.Input);
             using (var db = connectionManager.NewtryxConnection())
             {
-                return await db.QueryFirstOrDefaultAsync<OrderModel>("dbo.spr_GetOrderById", commandType: CommandType.StoredProcedure,
+                return await db.QueryFirstOrDefaultAsync<OrderViewModel>("dbo.spr_GetOrderById", commandType: CommandType.StoredProcedure,
                     param: param);
             }
         }
@@ -65,11 +65,11 @@ namespace Newtryx.BI
         public async Task<bool> UpdateOrder(OrderViewModel order)
         {
             var param = new DynamicParameters();
-            param.Add("@reservationId", dbType: DbType.Int64, value: order.ReservationId, direction: ParameterDirection.Input);
+            param.Add("@orderId", dbType: DbType.Int64, value: order.Id, direction: ParameterDirection.Input);
             param.Add("@description", dbType: DbType.String, value: order.Description, direction: ParameterDirection.Input);
             using (var db = connectionManager.NewtryxConnection())
             {
-                return await db.QueryFirstOrDefaultAsync<bool>("", commandType: CommandType.StoredProcedure,
+                return await db.QueryFirstOrDefaultAsync<bool>("dbo.spr_UpdateOrderDescriptionById", commandType: CommandType.StoredProcedure,
                     param: param);
             }
         }

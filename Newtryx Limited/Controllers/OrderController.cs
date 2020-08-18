@@ -23,6 +23,7 @@ namespace Newtryx_Limited.Controllers
         public async Task<ActionResult> Orders(long? ReservationId)
         {
             var data = await order.GetOrderByReservationId(ReservationId);
+            ViewBag.reservationId = ReservationId;
             return View(data);
         }
         public async Task<ActionResult> Index(int page = 1, int pageSize = 10)
@@ -104,7 +105,7 @@ namespace Newtryx_Limited.Controllers
                 if (ModelState.IsValid)
                 {
                     await order.UpdateOrder(model);
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Orders", "Order", new { model.ReservationId });
                 }
             }
             catch (Exception exception)

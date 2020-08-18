@@ -4,7 +4,7 @@
 }
 
 <h2>Add order</h2>
-
+<br />
 <div>
     @using (Html.BeginForm("Create", "Order", FormMethod.Post))
     {
@@ -21,9 +21,9 @@
         }
 
         <a href="#" id="addNew">Add New</a>
-        <table id="dataTable">
+        <table id="dataTable" class="table">
             <tr>
-                <th>Contact Name</th>
+                <th>Enter order details</th>
                 <th></th>
             </tr>
             @if (Model != null && Model.Count > 0)
@@ -46,7 +46,7 @@
             }
         </table>
         <br />
-        <input type="submit" value="Save Bulk Data" />
+        <input type="submit" value="Save Order"  class="btn btn-primary" />
     </div>
             }
         </div>

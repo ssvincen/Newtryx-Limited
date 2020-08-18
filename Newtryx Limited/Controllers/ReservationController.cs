@@ -21,10 +21,18 @@ namespace Newtryx_Limited.Controllers
             restaurant = _restaurant;
         }
         // GET: Reservation
-        public async Task<ActionResult> Index(int page = 1, int pageSize = 10)
+        public async Task<ActionResult> Index(string name, int page = 1, int pageSize = 10)
         {
             var data = await reservation.GetReservations();
-            return View(data.ToPagedList(page, pageSize));
+            if (string.IsNullOrEmpty(name))
+            {
+                return View(data.ToPagedList(page, pageSize));
+            }
+            else
+            {
+                var search = data.Where(x => x.Description.ToLower().StartsWith(name.ToLower()));
+                return View(search.ToPagedList(page, pageSize));
+            }
         }
 
         // GET: Reservation/Details/5

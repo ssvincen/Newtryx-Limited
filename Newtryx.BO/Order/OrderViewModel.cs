@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Newtryx.BO
 {
@@ -11,5 +12,6 @@ namespace Newtryx.BO
 
         [Required(ErrorMessage = "Description of an Order is required")]
         public string Description { get; set; }
+        public DateTime DateCreated { get; set; }
     }
 }
