@@ -1,0 +1,42 @@
+USE Newtryx
+
+CREATE TABLE ReservationStatus
+(
+	Id BIGINT PRIMARY KEY IDENTITY NOT NULL,
+	[Name] NVARCHAR(150) NOT NULL
+)
+INSERT INTO dbo.ReservationStatus([Name])
+VALUES('Booked')
+,('Arrived')
+,('Complete')
+GO
+
+CREATE TABLE Restaurant
+(
+	Id BIGINT PRIMARY KEY IDENTITY NOT NULL,
+	[Name] NVARCHAR(300) NOT NULL	
+)
+GO
+INSERT INTO dbo.Restaurant([Name])
+VALUES('Bellevue Cafe')
+GO
+
+CREATE TABLE Reservation
+(
+	Id BIGINT PRIMARY KEY IDENTITY NOT NULL,
+	RestaurantId BIGINT FOREIGN KEY REFERENCES dbo.Restaurant NOT NULL,
+	ReservationStatusId BIGINT FOREIGN KEY REFERENCES dbo.ReservationStatus NOT NULL,
+	StartDateTime DATETIME,
+	[Description] NVARCHAR(300),
+	DateCreated DATETIME NOT NULL DEFAULT(GETDATE())
+)
+GO
+
+CREATE TABLE Orders
+(
+	Id BIGINT PRIMARY KEY IDENTITY NOT NULL,
+	ReservationId BIGINT FOREIGN KEY REFERENCES dbo.Reservation NOT NULL,
+	[Description] NVARCHAR(300),
+	DateCreated DATETIME NOT NULL DEFAULT(GETDATE())
+)
+GO
