@@ -40,7 +40,7 @@ namespace Newtryx_Limited.Controllers
         public async Task<JsonResult> GetRestaurntByName(string name)
         {
             var restaurants = (from x in await restaurant.GetRestaurants() where x.Name.StartsWith(name) select new { label = x.Name }).ToList();
-            return Json(restaurants);
+            return Json(restaurants, JsonRequestBehavior.AllowGet);
         }
 
 
